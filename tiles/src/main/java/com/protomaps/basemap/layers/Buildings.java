@@ -97,7 +97,9 @@ public class Buildings implements ForwardingProfile.FeaturePostProcessor {
 
   @Override
   public List<VectorTile.Feature> postProcess(int zoom, List<VectorTile.Feature> items) throws GeometryException {
-    return items;
+    if (zoom == 15) {
+      return items;
+    }
     items = Area.filterArea(items, 0);
 
     if (zoom >= 15)
