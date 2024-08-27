@@ -26,16 +26,16 @@ public class Transit implements ForwardingProfile.FeaturePostProcessor {
       (!sf.hasTag("building") /* see https://github.com/protomaps/basemaps/issues/249 */) &&
       (!sf.hasTag("railway", "abandoned", "razed", "demolished", "removed", "construction", "platform", "proposed"))) {
 
-      int minZoom = 11;
+      int minZoom = 0;
 
       if (sf.hasTag("aeroway", "runway")) {
-        minZoom = 9;
+        minZoom = 0;
       } else if (sf.hasTag("aeroway", "taxiway")) {
-        minZoom = 10;
+        minZoom = 0;
       } else if (sf.hasTag("service", "yard", "siding", "crossover")) {
-        minZoom = 13;
+        minZoom = 0;
       } else if (sf.hasTag("man_made", "pier")) {
-        minZoom = 13;
+        minZoom = 0;
       }
 
       String kind = "other";
@@ -47,21 +47,21 @@ public class Transit implements ForwardingProfile.FeaturePostProcessor {
         "preserved", "subway", "tram")) {
         kind = "rail";
         kindDetail = sf.getString("railway");
-        minZoom = 14;
+        minZoom = 0;
 
         if (sf.hasTag("railway", "disused")) {
-          minZoom = 15;
+          minZoom = 0;
         }
       } else if (sf.hasTag("railway")) {
         kind = "rail";
         kindDetail = sf.getString("railway");
 
         if (kindDetail.equals("service")) {
-          minZoom = 13;
+          minZoom = 0;
 
           // eg a rail yard
           if (sf.hasTag("service")) {
-            minZoom = 14;
+            minZoom = 0;
           }
         }
       } else if (sf.hasTag("ferry")) {
@@ -86,7 +86,7 @@ public class Transit implements ForwardingProfile.FeaturePostProcessor {
         .setAttr("ref", sf.getString("ref"))
         .setAttr("route", sf.getString("route"))
         .setAttr("service", sf.getString("service"))
-        .setZoomRange(minZoom, 15);
+        .setZoomRange(minZoom, 0);
 
       // Core Tilezen schema properties
       if (!kindDetail.isEmpty()) {

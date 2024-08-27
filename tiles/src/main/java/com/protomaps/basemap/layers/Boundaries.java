@@ -28,14 +28,14 @@ public class Boundaries implements ForwardingProfile.OsmRelationPreprocessor,
     var adminLevel = 2;
     var disputed = false;
     var themeMinZoom = 0;
-    var themeMaxZoom = 0;
+    var themeMaxZoom = 15;
 
     if (sourceLayer.equals("ne_10m_admin_0_boundary_lines_land") ||
       sourceLayer.equals("ne_10m_admin_0_boundary_lines_map_units") ||
       sourceLayer.equals("ne_10m_admin_0_boundary_lines_disputed_areas") ||
       sourceLayer.equals("ne_10m_admin_1_states_provinces_lines")) {
-      themeMinZoom = 4;
-      themeMaxZoom = 5;
+      themeMinZoom = 0;
+      themeMaxZoom = 15;
       kind = "tz_boundary";
     }
 
@@ -139,7 +139,7 @@ public class Boundaries implements ForwardingProfile.OsmRelationPreprocessor,
 
 
     if (sf.canBeLine() && sf.getString("min_zoom") != null && (!kind.isEmpty() && !kind.equals("tz_boundary"))) {
-      var minZoom = Double.parseDouble(sf.getString("min_zoom")) - 1.0;
+      var minZoom = 0;
 
       var line = features.line(this.name())
         // Core Tilezen schema properties
@@ -186,7 +186,7 @@ public class Boundaries implements ForwardingProfile.OsmRelationPreprocessor,
         var kindDetail = "";
 
         var minZoom = 0;
-        var themeMinZoom = 6;
+        var themeMinZoom = 0;
 
         // Core Tilezen schema properties
         switch (minAdminLevel.getAsInt()) {

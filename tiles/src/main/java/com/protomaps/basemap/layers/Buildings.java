@@ -63,14 +63,14 @@ public class Buildings implements ForwardingProfile.FeaturePostProcessor {
       (sf.hasTag("building:part") && !sf.hasTag("building:part", "no")))) {
 
       var height = parseHeight(sf.getString(HEIGHT_KEY), sf.getString("building:levels"), sf.getString(MIN_HEIGHT_KEY));
-      Integer minZoom = 11;
+      Integer minZoom = 0;
       String kind = "building";
 
       // Limit building:part features to later zooms
       // TODO: (nvkelso 20230621) this should be based on area and volume, too
       if (sf.hasTag("building:part")) {
         kind = "building_part";
-        minZoom = 14;
+        minZoom = 0;
       }
 
       var feature = features.polygon(this.name())
@@ -97,9 +97,7 @@ public class Buildings implements ForwardingProfile.FeaturePostProcessor {
 
   @Override
   public List<VectorTile.Feature> postProcess(int zoom, List<VectorTile.Feature> items) throws GeometryException {
-    if (zoom == 15) {
-      return items;
-    }
+    return items;
     items = Area.filterArea(items, 0);
 
     if (zoom >= 15)
